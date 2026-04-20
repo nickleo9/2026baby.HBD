@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生日快樂 · 2026.04.21</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;700;800&family=Noto+Serif+TC:wght@300;400;500;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4ede0;
+  --bg-2: #ebdfcc;
+  --paper: #fffaf0;
+  --ink: #3a2818;
+  --ink-soft: #6b4e36;
+  --ink-muted: #9a8670;
+  --accent: #b85c3a;
+  --accent-soft: #d4896b;
+  --gold: #c9a25a;
+  --line: #d4c5ac;
+  --locked: #c8b89c;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Serif TC', 'Shippori Mincho B1', serif;
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(184,92,58,0.05) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(201,162,90,0.06) 0%, transparent 40%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.1 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* ── MUSIC TOGGLE ── */
+.mute-btn {
+  position: fixed;
+  bottom: 24px; right: 20px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 50;
+  transition: all 0.3s;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(58,40,24,0.25);
+}
+.mute-btn.visible { display: flex; }
+.mute-btn.muted { background: var(--ink-muted); }
+.mute-btn:hover { background: var(--accent); transform: scale(1.08); }
+
+/* ── PREVIEW BAR ── */
+.preview-bar {
+  position: fixed; top: 12px; right: 12px;
+  background: var(--ink); color: var(--paper);
+  padding: 8px 14px; font-size: 0.75rem;
+  letter-spacing: 2px; border-radius: 2px;
+  z-index: 200; display: none;
+  font-family: 'Caveat', cursive;
+}
+.preview-bar.show { display: block; }
+
+/* ── SPLASH ── */
+.splash {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: var(--bg); background-image: inherit;
+  transition: opacity 0.8s ease, transform 1s ease;
+  padding: 40px 24px; text-align: center;
+}
+.splash.hidden { opacity: 0; transform: translateY(-40px); pointer-events: none; }
+.splash .ornament {
+  font-family: 'Caveat', cursive; font-size: 1.3rem;
+  color: var(--accent); letter-spacing: 4px; margin-bottom: 16px;
+  opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
+}
+.splash h1 {
+  font-family: 'Shippori Mincho B1', serif; font-weight: 800;
+  font-size: clamp(2.4rem, 8vw, 3.8rem); color: var(--ink);
+  line-height: 1.2; margin-bottom: 8px;
+  opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+}
+.splash h1 span { color: var(--accent); }
+.splash .date {
+  font-family: 'Caveat', cursive; font-size: 1.8rem;
+  color: var(--ink-soft); margin-bottom: 48px;
+  opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
+}
+.splash .hint {
+  font-size: 0.95rem; color: var(--ink-muted);
+  margin-bottom: 28px; line-height: 1.8;
+  opacity: 0; animation: fadeUp 0.9s 1.1s forwards;
+}
+.splash button {
+  font-family: 'Noto Serif TC', serif;
+  background: var(--ink); color: var(--paper); border: none;
+  padding: 16px 44px; font-size: 1rem; letter-spacing: 6px;
+  cursor: pointer; border-radius: 2px; transition: all 0.3s;
+  opacity: 0; animation: fadeUp 0.9s 1.3s forwards;
+  position: relative;
+}
+.splash button::after {
+  content: ''; position: absolute; inset: -4px;
+  border: 1px solid var(--ink); border-radius: 2px; transition: all 0.3s;
+}
+.splash button:hover { background: var(--accent); transform: translateY(-2px); }
+.splash button:hover::after { inset: -8px; border-color: var(--accent); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── MAIN ── */
+main { max-width: 560px; margin: 0 auto; padding: 60px 20px 100px; }
+
+.main-header {
+  text-align: center; margin-bottom: 64px;
+  padding-bottom: 40px; border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.main-header::after {
+  content: '✦'; position: absolute; bottom: -10px; left: 50%;
+  transform: translateX(-50%); background: var(--bg); padding: 0 16px;
+  color: var(--gold); font-size: 1.2rem;
+}
+.main-header .eyebrow {
+  font-family: 'Caveat', cursive; font-size: 1.3rem;
+  color: var(--accent); letter-spacing: 3px; margin-bottom: 10px;
+}
+.main-header h2 {
+  font-family: 'Shippori Mincho B1', serif; font-size: 2rem;
+  font-weight: 700; color: var(--ink); margin-bottom: 14px;
+}
+.main-header p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.9; }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 36px; }
+.timeline::before {
+  content: ''; position: absolute;
+  left: 14px; top: 20px; bottom: 20px; width: 1px;
+  background: linear-gradient(180deg, transparent, var(--line) 8%, var(--line) 92%, transparent);
+}
+
+.card { position: relative; margin-bottom: 40px; transition: all 0.6s ease; }
+
+.card .bullet {
+  position: absolute; left: -32px; top: 22px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--locked);
+  transition: all 0.6s; z-index: 2;
+}
+.card.unlocked .bullet {
+  border-color: var(--accent); background: var(--accent);
+  box-shadow: 0 0 0 5px rgba(184,92,58,0.15);
+}
+
+.card .time-label {
+  font-family: 'Caveat', cursive; font-size: 1.5rem;
+  color: var(--accent); margin-bottom: 6px; letter-spacing: 1px;
+}
+.card.locked .time-label { color: var(--ink-muted); }
+
+.card .location {
+  font-size: 0.82rem; color: var(--ink-muted);
+  letter-spacing: 2px; margin-bottom: 12px;
+}
+
+.card-body {
+  background: var(--paper); border-radius: 4px; padding: 28px 26px;
+  box-shadow: 0 1px 2px rgba(74,50,30,0.06), 0 10px 30px -10px rgba(74,50,30,0.12);
+  transition: all 0.6s ease; position: relative; overflow: hidden;
+}
+.card-body::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.1 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23p)'/%3E%3C/svg%3E");
+  opacity: 0.6; pointer-events: none;
+}
+
+.card.locked .card-body {
+  background: rgba(200,184,156,0.25); box-shadow: none;
+  border: 1px dashed var(--locked);
+}
+.card.locked .card-body > *:not(.lock-info) { display: none; }
+
+.lock-info { display: none; text-align: center; padding: 12px 0; color: var(--ink-muted); font-size: 0.9rem; letter-spacing: 1px; }
+.card.locked .lock-info { display: block; }
+.lock-info .lock-icon { display: block; font-size: 1.3rem; margin-bottom: 6px; color: var(--locked); }
+.lock-info .unlock-at { font-family: 'Caveat', cursive; color: var(--accent-soft); font-size: 1.15rem; margin-top: 4px; }
+
+.card .photo {
+  width: 100%; aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--bg-2), var(--locked));
+  border-radius: 2px; margin-bottom: 18px;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.card .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card .photo-emoji { font-size: 3rem; filter: sepia(0.3); }
+
+.card .title { font-family: 'Shippori Mincho B1', serif; font-size: 1.35rem; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
+.card .message { font-size: 1rem; color: var(--ink-soft); line-height: 1.95; white-space: pre-wrap; }
+.card .signature { margin-top: 18px; font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--accent); text-align: right; }
+
+.card.just-unlocked { animation: unlockReveal 1.2s ease forwards; }
+@keyframes unlockReveal {
+  0%   { transform: scale(0.96); opacity: 0.5; }
+  50%  { transform: scale(1.02); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── PASSWORD GATE ── */
+.pw-gate {
+  margin-top: 64px;
+  opacity: 0; transform: translateY(24px); pointer-events: none;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.pw-gate.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.pw-gate.solved {
+  opacity: 0; transform: translateY(-20px); pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  max-height: 0; overflow: hidden; margin: 0;
+}
+
+.pw-box {
+  background: var(--paper); border-radius: 4px; padding: 40px 28px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(74,50,30,0.06), 0 10px 30px -10px rgba(74,50,30,0.12), inset 0 0 0 1px rgba(201,162,90,0.12);
+  position: relative; overflow: hidden;
+}
+.pw-box::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='pp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.1 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23pp)'/%3E%3C/svg%3E");
+  opacity: 0.6; pointer-events: none;
+}
+
+.pw-badge { display: inline-block; font-family: 'Caveat', cursive; font-size: 1rem; color: var(--gold); letter-spacing: 4px; margin-bottom: 16px; position: relative; }
+.pw-question { font-family: 'Shippori Mincho B1', serif; font-size: 2.2rem; font-weight: 800; color: var(--ink); margin-bottom: 8px; position: relative; }
+.pw-subtitle { font-size: 0.88rem; color: var(--ink-muted); margin-bottom: 28px; letter-spacing: 1px; position: relative; }
+
+.pw-form { display: flex; gap: 8px; max-width: 300px; margin: 0 auto 16px; position: relative; }
+.pw-input {
+  flex: 1; min-width: 0;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 2px;
+  padding: 12px 14px; font-family: 'Noto Serif TC', serif; font-size: 1rem;
+  color: var(--ink); outline: none; transition: border-color 0.3s;
+}
+.pw-input:focus { border-color: var(--accent); }
+.pw-input::placeholder { color: var(--locked); }
+.pw-submit {
+  background: var(--ink); color: var(--paper); border: none;
+  padding: 12px 18px; font-family: 'Noto Serif TC', serif;
+  font-size: 0.9rem; letter-spacing: 2px; cursor: pointer;
+  border-radius: 2px; transition: all 0.3s; flex-shrink: 0;
+}
+.pw-submit:hover { background: var(--accent); }
+
+.pw-hint-text { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--accent-soft); min-height: 28px; position: relative; transition: opacity 0.3s; }
+.pw-success-text { font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--gold); display: none; position: relative; }
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  15%      { transform: translateX(-8px); }
+  35%      { transform: translateX(8px); }
+  55%      { transform: translateX(-5px); }
+  75%      { transform: translateX(5px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+/* ── STORY BOOK ── */
+.story-section {
+  margin-top: 80px; padding-top: 40px;
+  border-top: 2px dashed var(--line);
+  opacity: 0; pointer-events: none;
+  transition: opacity 1s ease 0.4s;
+}
+.story-section.revealed { opacity: 1; pointer-events: auto; }
+
+.story-intro { text-align: center; margin-bottom: 50px; padding: 0 20px; }
+.story-intro .tag { display: inline-block; font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--gold); letter-spacing: 3px; margin-bottom: 12px; }
+.story-intro h3 { font-family: 'Shippori Mincho B1', serif; font-size: 2rem; font-weight: 700; margin-bottom: 14px; }
+.story-intro p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.9; }
+
+.book {
+  background: var(--paper); border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(74,50,30,0.1), 0 25px 50px -20px rgba(74,50,30,0.25), inset 0 0 0 1px rgba(201,162,90,0.15);
+  overflow: hidden; position: relative;
+}
+.book::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='bk'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23bk)'/%3E%3C/svg%3E");
+  pointer-events: none; opacity: 0.7;
+}
+
+.book-pages { position: relative; min-height: 380px; }
+.page {
+  padding: 44px 32px; position: absolute; inset: 0;
+  opacity: 0; transition: opacity 0.6s ease;
+  pointer-events: none;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.page.active { opacity: 1; pointer-events: auto; position: relative; }
+
+.page .chapter-num { font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--gold); letter-spacing: 4px; margin-bottom: 10px; }
+.page .chapter-title { font-family: 'Shippori Mincho B1', serif; font-size: 1.7rem; font-weight: 700; color: var(--ink); margin-bottom: 28px; line-height: 1.3; }
+.page .chapter-body { font-size: 1rem; color: var(--ink-soft); line-height: 2; white-space: pre-wrap; }
+
+.book-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 28px; border-top: 1px solid var(--line);
+  background: rgba(244,237,224,0.4); position: relative; z-index: 2;
+}
+.book-nav button {
+  background: none; border: 1px solid var(--line); padding: 8px 20px;
+  font-family: 'Noto Serif TC', serif; color: var(--ink); cursor: pointer;
+  font-size: 0.9rem; border-radius: 2px; transition: all 0.3s;
+}
+.book-nav button:hover:not(:disabled) { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.book-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+.book-nav .page-indicator { font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--ink-muted); letter-spacing: 2px; }
+
+/* ── FINAL ── */
+.final { text-align: center; margin-top: 80px; padding: 40px 20px; opacity: 0; transition: opacity 1s ease 0.6s; }
+.final.show { opacity: 1; }
+.final .signature-line { font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent); margin-top: 20px; }
+
+.footer-note { text-align: center; margin-top: 60px; padding: 30px 20px; font-size: 0.8rem; color: var(--ink-muted); letter-spacing: 2px; }
+
+@media (max-width: 420px) {
+  main { padding: 40px 16px 80px; }
+  .timeline { padding-left: 28px; }
+  .card-body { padding: 22px 20px; }
+  .pw-box { padding: 32px 20px; }
+  .pw-form { max-width: 100%; }
+  .page { padding: 36px 24px; }
+  .book-nav { padding: 16px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-bar" id="previewBar">· Preview Mode ·</div>
+<button class="mute-btn" id="muteBtn" aria-label="音樂">♪</button>
+<audio id="bgm" loop preload="auto"></audio>
+
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="ornament">· Happy Birthday ·</div>
+  <h1>給最寶貝的<br><span id="splashName">—</span></h1>
+  <div class="date">2026.04.21</div>
+  <p class="hint">今天會一頁一頁慢慢解鎖<br>按你今天的節奏 剛好配你的行程</p>
+  <button id="openBtn">打開</button>
+</div>
+
+<!-- MAIN -->
+<main id="main">
+
+  <section class="main-header">
+    <div class="eyebrow">Her Birthday · Chapter 2026</div>
+    <h2 id="mainHeading">你的一天</h2>
+    <p>不要一次看完喔<br>每個時段到了才會解鎖那一格</p>
+  </section>
+
+  <section class="timeline" id="timeline"></section>
+
+  <!-- PASSWORD GATE -->
+  <section class="pw-gate" id="pwGate">
+    <div class="pw-box">
+      <div class="pw-badge">· 密語關卡 ·</div>
+      <div class="pw-question" id="pwQuestion"></div>
+      <div class="pw-subtitle" id="pwSubtitle"></div>
+      <div class="pw-form" id="pwForm">
+        <input class="pw-input" id="pwInput" type="text" placeholder="輸入答案…"
+               autocomplete="off" autocorrect="off" spellcheck="false" />
+        <button class="pw-submit" id="pwSubmit">解鎖</button>
+      </div>
+      <div class="pw-hint-text" id="pwHint"></div>
+      <div class="pw-success-text" id="pwSuccess">答對了 ✦</div>
+    </div>
+  </section>
+
+  <!-- STORY BOOK -->
+  <section class="story-section" id="storySection">
+    <div class="story-intro">
+      <div class="tag">· The Final Chapter ·</div>
+      <h3 id="storyTitle">關於你這個人</h3>
+      <p>這本小書只有今天才打得開<br>請慢慢翻</p>
+    </div>
+    <div class="book">
+      <div class="book-pages" id="bookPages"></div>
+      <div class="book-nav">
+        <button id="prevPage">← 前一頁</button>
+        <span class="page-indicator" id="pageIndicator">1 / 1</span>
+        <button id="nextPage">下一頁 →</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="final" id="final">
+    <p style="color:var(--ink-soft);font-size:1rem;line-height:2;" id="finalText">—</p>
+    <div class="signature-line">— Nick</div>
+  </div>
+
+  <div class="footer-note">made with love · 2026</div>
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ▼▼▼  CONFIG  — 所有要改的內容都在這裡  ▼▼▼
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+
+  herName:      "寶貝",              // ← 她的暱稱
+  birthdayDate: "2026-04-21",
+  mainHeading:  "你的一天",
+
+  bgmFile:   "./bgm.mp3",           // ← 背景音樂路徑；不要音樂就填 null
+  bgmVolume: 0.4,
+
+  password:         "戀愛猴子",      // ← 正確答案
+  passwordQuestion: "吱吱咕嚕嚕",    // ← 題目
+  passwordSubtitle: "你一看就知道答案，提示都多餘",
+  wrongHints: [
+    "不對欸，再想想",
+    "再猜一次？",
+    "你知道的，別裝傻",
+    "提示：一種可愛的動物",
+    "再試試看 💕"
+  ],
+
+  timeline: [
+    {
+      time: "08:00", location: "早安 · 你剛醒的時候", title: "生日快樂",
+      photo: null, photoEmoji: "☀️",
+      message: "生日快樂寶貝。\n今天你是主角，我是觀眾之一，\n但我是坐第一排的那個。\n\n慢慢起床、慢慢吃早餐、慢慢準備。\n不用急，今天一整天都是你的。\n中午見。"
+    },
+    {
+      time: "11:30", location: "出門前 · 你家", title: "準備好了嗎",
+      photo: null, photoEmoji: "🌿",
+      message: "你準備好了嗎？\n我猜你現在站在鏡子前，\n換了第三套衣服了。\n\n不管穿哪一件都好看，\n因為穿衣服的是你。\n\n松江南京捷運站見。"
+    },
+    {
+      time: "13:00", location: "松江南京 · 就饗鐵板燒", title: "午餐",
+      photo: null, photoEmoji: "🍳",
+      message: "到啦。\n這家是你挑的，所以一定好吃。\n你挑的地方從來沒失手過，\n包括我。\n\n今天想吃什麼就點什麼，\n別跟我客氣，\n你刷什麼我都刷。"
+    },
+    {
+      time: "14:45", location: "三重 · 越式按摩", title: "一起軟綿綿",
+      photo: null, photoEmoji: "🌸",
+      message: "現在我們應該都閉著眼睛。\n什麼都不要想、什麼都不要回，\n就專心讓人把你揉得軟軟的。\n\n你挑的這家一定很舒服，\n等等一起軟綿綿地去吃島語。"
+    },
+    {
+      time: "16:30", location: "按完出來", title: "準備去島語",
+      photo: null, photoEmoji: "🍃",
+      message: "出來了嗎？\n頭髮看起來怎麼樣？\n我賭你已經照了鏡子三次。\n\n下一站島語，你期待很久了。\n這段路我們慢慢走就好。"
+    },
+    {
+      time: "17:45", location: "島語餐廳", title: "晚餐",
+      photo: null, photoEmoji: "🕯️",
+      message: "島語！\n你等超久的島語！\n一定要把所有區通通掃一輪，\n不能客氣。\n\n跟你一起吃飯是全世界最幸福的事，\n你知道吧？\n（不用謙虛，就是這樣。）\n\n今天這餐我負責刷，\n你負責開開心心。"
+    },
+    {
+      time: "21:00", location: "到家 · 門口", title: "打開門看看",
+      photo: null, photoEmoji: "💐",
+      message: "到家了嗎？\n門口那個不是我，是一束花。\n\n蛋糕我沒有先訂，\n因為我想了很久，\n覺得你挑的蛋糕一定比我挑的好吃。\n\n查一下 LINE，\n有一張券在那邊等你，\n你挑日子、你挑店，\n我陪你去。"
+    },
+    {
+      time: "22:30", location: "睡前 · 你的床", title: "最後一件事",
+      photo: null, photoEmoji: "📖",
+      message: "最後一頁。\n\n下面有一個關卡。\n過了那一關，會打開一本小書，\n是關於你這個人。\n\n我寫了很久\n（其實是今晚趕的，但請裝作不知道）。\n\n不用現在看完，\n但希望你看完會覺得，\n至少有一個人把你放在心上，\n認真地記得你。\n\n我就是那個人。\n\n晚安。\n生日快樂。"
+    }
+  ],
+
+  story: {
+    title: "關於你這個人",
+    chapters: [
+      {
+        num:   "Chapter One",
+        title: "認識你之前的你",
+        body:  "在認識我之前，你就已經是這樣的人了。\n\n【Nick 填：她的童年或學生時代 1-2 件你知道的事，她以前的夢想或某個階段】\n\n我有時候會想，\n那時候的你會不會想得到，\n未來會遇到一個每天煩你的男生。\n\n應該沒有。\n\n但我很慶幸你是這樣長大的人。\n不然我們不會在這裡。"
+      },
+      {
+        num:   "Chapter Two",
+        title: "我們遇到那一年",
+        body:  "【Nick 填：哪一年認識、在哪認識、第一印象、讓你決定「就是她了」的具體瞬間（越細越好）、在一起的日期】\n\n那一天之後我就知道了。\n後面的事，你都參與了。"
+      },
+      {
+        num:   "Chapter Three",
+        title: "今年的你",
+        body:  "2025 到 2026 你做了很多事。\n\n【Nick 填：她今年做了什麼讓你印象深的事 3-5 件，以及「她不知道你在看」的某個具體畫面】\n\n那一刻我心裡想：\n我真的運氣很好。"
+      },
+      {
+        num:   "Chapter Four",
+        title: "接下來的你",
+        body:  "明年我想跟你一起做這幾件事：\n\n【Nick 填：3-5 件具體的事，例如去哪旅行、搬在一起、某個你們的目標】\n\n但我最想要的，\n其實就是你繼續是你。\n不用變得更好。\n你已經是我看過最好的版本。\n\n這本書每一年會多一章。\n\n我們明年見。"
+      }
+    ]
+  },
+
+  finalText: "這是我今年給你的禮物。\n筆電是你選的沒錯，但這個是我選給你的。\n明年見。"
+
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   ▲▲▲  以下是程式，不用改  ▲▲▲
+   ═══════════════════════════════════════════════════════════════ */
+
+const isPreview  = new URLSearchParams(location.search).get('preview') === '1';
+const UNLOCK_KEY = 'hbd2026_pw_done';
+
+if (isPreview) document.getElementById('previewBar').classList.add('show');
+
+// ── 套用 CONFIG ──
+document.getElementById('splashName').textContent  = CONFIG.herName;
+document.getElementById('mainHeading').textContent = CONFIG.mainHeading;
+document.getElementById('storyTitle').textContent  = CONFIG.story.title;
+document.getElementById('finalText').textContent   = CONFIG.finalText;
+document.getElementById('pwQuestion').textContent  = CONFIG.passwordQuestion;
+document.getElementById('pwSubtitle').textContent  = CONFIG.passwordSubtitle;
+document.title = `生日快樂 · ${CONFIG.herName} · ${CONFIG.birthdayDate}`;
+
+// ── 背景音樂 ──
+const audio   = document.getElementById('bgm');
+const muteBtn = document.getElementById('muteBtn');
+
+if (CONFIG.bgmFile) {
+  audio.src    = CONFIG.bgmFile;
+  audio.volume = CONFIG.bgmVolume;
+  muteBtn.classList.add('visible');
+  muteBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().catch(() => {});
+      muteBtn.classList.remove('muted');
+      muteBtn.textContent = '♪';
+    } else {
+      audio.pause();
+      muteBtn.classList.add('muted');
+      muteBtn.textContent = '♩';
+    }
+  });
+}
+
+// ── 建立 Timeline 卡片 ──
+const timelineEl = document.getElementById('timeline');
+CONFIG.timeline.forEach((item, idx) => {
+  const card = document.createElement('article');
+  card.className = 'card locked';
+  card.id        = `card-${idx}`;
+  card.innerHTML = `
+    <div class="bullet"></div>
+    <div class="time-label">${item.time}</div>
+    <div class="location">${item.location.toUpperCase()}</div>
+    <div class="card-body">
+      <div class="lock-info">
+        <span class="lock-icon">✦</span>
+        還沒到時間
+        <div class="unlock-at">${item.time} 解鎖</div>
+      </div>
+      ${item.photo
+        ? `<div class="photo"><img src="${item.photo}" alt="${item.title}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'photo-emoji\\'>${item.photoEmoji||'✦'}</span>'"></div>`
+        : `<div class="photo"><span class="photo-emoji">${item.photoEmoji||'✦'}</span></div>`
+      }
+      <h3 class="title">${item.title}</h3>
+      <p class="message">${item.message}</p>
+      <div class="signature">— N</div>
+    </div>`;
+  timelineEl.appendChild(card);
+});
+
+// ── 建立故事書頁面 ──
+const bookPagesEl = document.getElementById('bookPages');
+CONFIG.story.chapters.forEach((ch, idx) => {
+  const page = document.createElement('div');
+  page.className = 'page' + (idx === 0 ? ' active' : '');
+  page.innerHTML = `
+    <div class="chapter-num">${ch.num}</div>
+    <h4 class="chapter-title">${ch.title}</h4>
+    <p class="chapter-body">${ch.body}</p>`;
+  bookPagesEl.appendChild(page);
+});
+
+// ── 翻頁邏輯 ──
+let currentPage = 0;
+const totalPages = CONFIG.story.chapters.length;
+const prevBtn    = document.getElementById('prevPage');
+const nextBtn    = document.getElementById('nextPage');
+const indicator  = document.getElementById('pageIndicator');
+
+function updatePage() {
+  document.querySelectorAll('.page').forEach((p, i) => p.classList.toggle('active', i === currentPage));
+  indicator.textContent = `${currentPage + 1} / ${totalPages}`;
+  prevBtn.disabled = currentPage === 0;
+  nextBtn.disabled = currentPage === totalPages - 1;
+}
+prevBtn.addEventListener('click', () => { if (currentPage > 0) { currentPage--; updatePage(); } });
+nextBtn.addEventListener('click', () => { if (currentPage < totalPages - 1) { currentPage++; updatePage(); } });
+updatePage();
+
+// ── 顯示故事書（密語解鎖後呼叫）──
+function showStory() {
+  const storyEl = document.getElementById('storySection');
+  const finalEl = document.getElementById('final');
+  storyEl.classList.add('revealed');
+  finalEl.classList.add('show');
+  setTimeout(() => storyEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+}
+
+// ── 密語邏輯 ──
+let wrongCount = 0;
+const pwGate   = document.getElementById('pwGate');
+const pwInput  = document.getElementById('pwInput');
+const pwSubmit = document.getElementById('pwSubmit');
+const pwHint   = document.getElementById('pwHint');
+const pwSuccess = document.getElementById('pwSuccess');
+const pwForm   = document.getElementById('pwForm');
+
+function checkPassword() {
+  const val = pwInput.value.trim();
+  if (val === CONFIG.password) {
+    pwForm.style.display    = 'none';
+    pwHint.style.display    = 'none';
+    pwSuccess.style.display = 'block';
+    localStorage.setItem(UNLOCK_KEY, '1');
+    setTimeout(() => { pwGate.classList.add('solved'); }, 800);
+    setTimeout(() => { showStory(); }, 1200);
+  } else {
+    pwForm.classList.remove('shake');
+    void pwForm.offsetWidth; // reflow to restart animation
+    pwForm.classList.add('shake');
+    pwHint.textContent = CONFIG.wrongHints[wrongCount % CONFIG.wrongHints.length];
+    wrongCount++;
+    pwInput.value = '';
+    pwInput.focus();
+  }
+}
+
+pwSubmit.addEventListener('click', checkPassword);
+pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
+
+// ── 時間解鎖邏輯 ──
+function checkUnlock() {
+  const now = new Date();
+
+  CONFIG.timeline.forEach((item, idx) => {
+    const [h, m] = item.time.split(':').map(Number);
+    const target = new Date(`${CONFIG.birthdayDate}T${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00+08:00`);
+    const shouldUnlock = isPreview || now >= target;
+    const card = document.getElementById(`card-${idx}`);
+    if (shouldUnlock && card.classList.contains('locked')) {
+      card.classList.remove('locked');
+      card.classList.add('unlocked', 'just-unlocked');
+    }
+  });
+
+  // 密語關卡 & 故事書：跟著最後一張卡（22:30）解鎖
+  const lastItem = CONFIG.timeline[CONFIG.timeline.length - 1];
+  const [lh, lm] = lastItem.time.split(':').map(Number);
+  const storyTarget = new Date(`${CONFIG.birthdayDate}T${String(lh).padStart(2,'0')}:${String(lm).padStart(2,'0')}:00+08:00`);
+
+  if (isPreview || now >= storyTarget) {
+    // 已解鎖過密語 → 直接顯示故事
+    if (localStorage.getItem(UNLOCK_KEY) === '1') {
+      showStory();
+    } else {
+      pwGate.classList.add('show');
+    }
+  }
+}
+
+// ── Splash 打開 ──
+document.getElementById('openBtn').addEventListener('click', () => {
+  document.getElementById('splash').classList.add('hidden');
+  setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 1000);
+  muteBtn.classList.add('visible');
+  if (CONFIG.bgmFile) audio.play().catch(() => {});
+  checkUnlock();
+});
+
+checkUnlock();
+setInterval(checkUnlock, 30000);
+</script>
+</body>
+</html>
