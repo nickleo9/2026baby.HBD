@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>上傳照片 · Verna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f2ea;
+    --card:#ffffff;
+    --ink:#2d2a24;
+    --ink-soft:#6a6358;
+    --gold:#b8935a;
+    --line:#e5dfd3;
+    --ok:#3d8b63;
+    --err:#b94a4a;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Shippori Mincho B1',serif;min-height:100vh}
+  .wrap{max-width:520px;margin:0 auto;padding:24px 18px 60px}
+  h1{font-family:'Shippori Mincho B1',serif;font-size:1.6rem;margin:0 0 4px;letter-spacing:1px}
+  .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:22px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;margin-bottom:16px}
+  label{display:block;font-size:.85rem;color:var(--ink-soft);margin-bottom:10px;letter-spacing:.5px}
+  input[type=password],input[type=text]{width:100%;font:inherit;font-size:1rem;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fafaf7;color:var(--ink)}
+  input[type=password]:focus,input[type=text]:focus{outline:none;border-color:var(--gold)}
+  .slot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+  .slot-btn{padding:12px 6px;border:1px solid var(--line);background:#fafaf7;border-radius:10px;font:inherit;font-size:.82rem;color:var(--ink-soft);cursor:pointer;text-align:center;line-height:1.3;transition:.15s}
+  .slot-btn .t{font-family:'Caveat',cursive;font-size:1rem;color:var(--gold);display:block;margin-bottom:2px;letter-spacing:.5px}
+  .slot-btn:active{transform:scale(.96)}
+  .slot-btn.active{background:var(--ink);border-color:var(--ink);color:#fff}
+  .slot-btn.active .t{color:#e6c88a}
+  .slot-btn.has-photo::after{content:"●";position:absolute;margin-left:4px;color:var(--ok);font-size:.7rem}
+  .slot-group{margin-top:16px}
+  .slot-group-title{font-size:.78rem;color:var(--ink-soft);letter-spacing:2px;margin-bottom:8px;text-transform:uppercase}
+  .file-zone{position:relative;border:2px dashed var(--line);border-radius:12px;padding:30px 14px;text-align:center;background:#fafaf7;cursor:pointer;transition:.15s}
+  .file-zone:active{background:#f0ebe0}
+  .file-zone input{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .file-zone .icon{font-size:2rem;color:var(--gold);margin-bottom:6px}
+  .file-zone .hint{color:var(--ink-soft);font-size:.9rem}
+  .preview{margin-top:14px;border-radius:12px;overflow:hidden;display:none;position:relative;background:#000}
+  .preview img{width:100%;display:block;max-height:60vh;object-fit:contain}
+  .preview.show{display:block}
+  .preview .clear{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:0;width:32px;height:32px;border-radius:50%;font-size:1.1rem;cursor:pointer}
+  button.primary{width:100%;padding:15px;border:0;background:var(--ink);color:#fff;border-radius:12px;font:inherit;font-size:1.05rem;cursor:pointer;letter-spacing:2px;transition:.15s}
+  button.primary:active{transform:scale(.98)}
+  button.primary:disabled{opacity:.5;cursor:not-allowed}
+  .msg{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:.92rem;text-align:center;display:none}
+  .msg.show{display:block}
+  .msg.ok{background:#e8f3ec;color:var(--ok);border:1px solid #b5dbc3}
+  .msg.err{background:#f7e7e7;color:var(--err);border:1px solid #e3b7b7}
+  .progress{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:12px;display:none}
+  .progress.show{display:block}
+  .progress .bar{height:100%;width:0;background:var(--gold);transition:width .2s}
+  .gate{min-height:80vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px}
+  .gate h1{font-size:1.4rem;margin-bottom:8px}
+  .gate p{color:var(--ink-soft);margin-bottom:24px}
+  .gate input{width:220px;text-align:center;letter-spacing:4px;font-size:1.1rem}
+  .gate button{margin-top:16px;padding:12px 36px;background:var(--ink);color:#fff;border:0;border-radius:10px;font:inherit;font-size:1rem;letter-spacing:4px;cursor:pointer}
+  .hidden{display:none!important}
+  .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+  .thumb{aspect-ratio:1;border-radius:8px;overflow:hidden;background:#eee;position:relative}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb .lbl{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);color:#fff;font-size:.7rem;text-align:center;padding:2px 0;letter-spacing:1px}
+  .foot{text-align:center;color:var(--ink-soft);font-size:.78rem;margin-top:24px;letter-spacing:1px}
+</style>
+</head>
+<body>
+
+<!-- ───── 密碼閘 ───── -->
+<div id="gate" class="gate">
+  <h1>上傳照片</h1>
+  <p>請輸入密碼</p>
+  <input id="gatePw" type="password" inputmode="numeric" maxlength="12" autocomplete="off">
+  <button id="gateBtn">進入</button>
+  <div id="gateErr" style="color:var(--err);margin-top:12px;display:none;font-size:.9rem">密碼不對</div>
+</div>
+
+<!-- ───── 主畫面 ───── -->
+<div id="app" class="wrap hidden">
+  <h1>上傳照片</h1>
+  <div class="sub">選一個位置 → 拍照或從相簿選 → 按上傳</div>
+
+  <div class="card">
+    <label>選擇位置</label>
+
+    <div class="slot-group">
+      <div class="slot-group-title">時間軸 · Timeline</div>
+      <div class="slot-grid" id="timelineSlots"></div>
+    </div>
+
+    <div class="slot-group">
+      <div class="slot-group-title">故事書 · Story Book</div>
+      <div class="slot-grid" id="storySlots"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <label>選擇照片</label>
+    <div class="file-zone" id="fileZone">
+      <div class="icon">＋</div>
+      <div class="hint">點這裡 · 拍照 或 從相簿選</div>
+      <input id="fileInput" type="file" accept="image/*" capture="environment">
+    </div>
+    <div class="preview" id="preview">
+      <button class="clear" id="clearBtn" type="button">×</button>
+      <img id="previewImg" alt="">
+    </div>
+  </div>
+
+  <button class="primary" id="uploadBtn" disabled>上傳</button>
+  <div class="progress" id="progress"><div class="bar" id="progressBar"></div></div>
+  <div class="msg" id="msg"></div>
+
+  <div class="card" style="margin-top:24px">
+    <label style="margin-bottom:6px">目前已上傳</label>
+    <div class="sub" style="font-size:.8rem;margin-bottom:10px">點縮圖可以重新指定那個位置</div>
+    <div class="thumbs" id="thumbs"></div>
+  </div>
+
+  <div class="foot">Cloudinary · dtp9t6bbu</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   設定區
+   ═══════════════════════════════════════════════════════════ */
+const CLOUD_NAME    = 'dtp9t6bbu';
+const UPLOAD_PRESET = 'birthday_unsigned';
+const FOLDER        = 'birthday';
+const PASSWORD      = '0421';     // ← 想改密碼改這行
+
+const SLOTS_TIMELINE = [
+  { id:'slot-1', t:'08:00', label:'早安' },
+  { id:'slot-2', t:'11:30', label:'出門' },
+  { id:'slot-3', t:'13:00', label:'午餐' },
+  { id:'slot-4', t:'14:45', label:'按摩' },
+  { id:'slot-5', t:'16:30', label:'休息' },
+  { id:'slot-6', t:'17:45', label:'晚餐' },
+  { id:'slot-7', t:'21:00', label:'到家' },
+  { id:'slot-8', t:'22:30', label:'睡前' },
+];
+const SLOTS_STORY = [
+  { id:'chapter-1', t:'Ch.1', label:'勇敢' },
+  { id:'chapter-2', t:'Ch.2', label:'三年' },
+  { id:'chapter-3', t:'Ch.3', label:'創業' },
+  { id:'chapter-4', t:'Ch.4', label:'未來' },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   密碼閘
+   ═══════════════════════════════════════════════════════════ */
+const GATE_KEY = 'upload_unlocked';
+if (sessionStorage.getItem(GATE_KEY) === '1') openApp();
+
+document.getElementById('gateBtn').addEventListener('click', checkGate);
+document.getElementById('gatePw').addEventListener('keydown', e=>{ if(e.key==='Enter') checkGate(); });
+
+function checkGate(){
+  const v = document.getElementById('gatePw').value.trim();
+  if (v === PASSWORD){
+    sessionStorage.setItem(GATE_KEY,'1');
+    openApp();
+  } else {
+    document.getElementById('gateErr').style.display='block';
+  }
+}
+function openApp(){
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  renderSlots();
+  refreshThumbs();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Slot 選擇
+   ═══════════════════════════════════════════════════════════ */
+let selectedSlot = null;
+
+function renderSlots(){
+  const tl = document.getElementById('timelineSlots');
+  const st = document.getElementById('storySlots');
+  tl.innerHTML = SLOTS_TIMELINE.map(slotBtnHtml).join('');
+  st.innerHTML = SLOTS_STORY.map(slotBtnHtml).join('');
+  document.querySelectorAll('.slot-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>selectSlot(btn.dataset.id));
+  });
+}
+function slotBtnHtml(s){
+  return `<button class="slot-btn" data-id="${s.id}" type="button"><span class="t">${s.t}</span>${s.label}</button>`;
+}
+function selectSlot(id){
+  selectedSlot = id;
+  document.querySelectorAll('.slot-btn').forEach(b=>b.classList.toggle('active', b.dataset.id===id));
+  updateUploadBtn();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   檔案選擇 + 預覽
+   ═══════════════════════════════════════════════════════════ */
+let selectedFile = null;
+const fileInput  = document.getElementById('fileInput');
+const preview    = document.getElementById('preview');
+const previewImg = document.getElementById('previewImg');
+
+fileInput.addEventListener('change', e=>{
+  const f = e.target.files[0];
+  if (!f) return;
+  selectedFile = f;
+  const reader = new FileReader();
+  reader.onload = ev => { previewImg.src = ev.target.result; preview.classList.add('show'); };
+  reader.readAsDataURL(f);
+  updateUploadBtn();
+});
+
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  selectedFile = null;
+  fileInput.value = '';
+  preview.classList.remove('show');
+  updateUploadBtn();
+});
+
+function updateUploadBtn(){
+  document.getElementById('uploadBtn').disabled = !(selectedSlot && selectedFile);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   上傳
+   ═══════════════════════════════════════════════════════════ */
+document.getElementById('uploadBtn').addEventListener('click', doUpload);
+
+function doUpload(){
+  if (!selectedSlot || !selectedFile) return;
+
+  const btn  = document.getElementById('uploadBtn');
+  const msg  = document.getElementById('msg');
+  const prog = document.getElementById('progress');
+  const bar  = document.getElementById('progressBar');
+
+  btn.disabled = true;
+  btn.textContent = '上傳中…';
+  msg.classList.remove('show','ok','err');
+  prog.classList.add('show');
+  bar.style.width = '0%';
+
+  const fd = new FormData();
+  fd.append('file', selectedFile);
+  fd.append('upload_preset', UPLOAD_PRESET);
+  fd.append('public_id', `${FOLDER}/${selectedSlot}`);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`);
+  xhr.upload.onprogress = e=>{
+    if (e.lengthComputable) bar.style.width = (e.loaded/e.total*100)+'%';
+  };
+  xhr.onload = ()=>{
+    prog.classList.remove('show');
+    btn.disabled = false;
+    btn.textContent = '上傳';
+    if (xhr.status >= 200 && xhr.status < 300){
+      const res = JSON.parse(xhr.responseText);
+      showMsg('ok', '✓ 上傳成功！去網站看看吧');
+      selectedFile = null;
+      fileInput.value = '';
+      preview.classList.remove('show');
+      updateUploadBtn();
+      refreshThumbs();
+    } else {
+      let err = '上傳失敗';
+      try { err = (JSON.parse(xhr.responseText).error||{}).message || err; } catch(e){}
+      showMsg('err', '✗ '+err);
+    }
+  };
+  xhr.onerror = ()=>{
+    prog.classList.remove('show');
+    btn.disabled = false;
+    btn.textContent = '上傳';
+    showMsg('err', '✗ 網路錯誤，再試一次');
+  };
+  xhr.send(fd);
+}
+
+function showMsg(kind, text){
+  const m = document.getElementById('msg');
+  m.textContent = text;
+  m.className = 'msg show ' + kind;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   已上傳縮圖
+   ═══════════════════════════════════════════════════════════ */
+function refreshThumbs(){
+  const all = [...SLOTS_TIMELINE, ...SLOTS_STORY];
+  const t = Date.now();
+  document.getElementById('thumbs').innerHTML = all.map(s=>`
+    <button class="thumb" type="button" data-id="${s.id}" style="border:0;padding:0;cursor:pointer">
+      <img src="https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_200,h_200,c_fill,q_auto,f_auto/${FOLDER}/${s.id}.jpg?t=${t}"
+           onerror="this.style.display='none';this.parentElement.style.background='#eee'"
+           alt="${s.label}">
+      <span class="lbl">${s.t}</span>
+    </button>
+  `).join('');
+  document.querySelectorAll('#thumbs .thumb').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      selectSlot(el.dataset.id);
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+}
+</script>
+</body>
+</html>
