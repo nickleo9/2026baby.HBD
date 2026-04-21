@@ -438,6 +438,13 @@ const CONFIG = {
   bgmFile:   "./bgm.mp3",           // ← 背景音樂路徑；不要音樂就填 null
   bgmVolume: 0.4,
 
+  // ── Cloudinary（給 upload.html 用的即時照片）──
+  cloudinary: {
+    cloudName: "dtp9t6bbu",
+    folder:    "birthday",
+    transform: "f_auto,q_auto,w_1200"
+  },
+
   password:         "戀愛猴子",      // ← 正確答案
   passwordQuestion: "吱吱咕嚕嚕",    // ← 題目
   passwordSubtitle: "你一看就知道答案，提示都多餘",
@@ -451,41 +458,49 @@ const CONFIG = {
 
   timeline: [
     {
+      slotId: "slot-1",
       time: "08:00", location: "早安 · 你剛醒的時候", title: "生日快樂",
       photo: null, photoEmoji: "☀️",
       message: "生日快樂寶貝。\n今天你是主角，我是觀眾之一，\n但我是坐第一排的那個。\n\n慢慢起床、慢慢吃早餐、慢慢準備。\n不用急，今天一整天都是你的。\n中午見。"
     },
     {
+      slotId: "slot-2",
       time: "11:30", location: "出門前 · 你家", title: "準備好了嗎",
       photo: null, photoEmoji: "🌿",
       message: "你準備好了嗎？\n我猜你現在站在鏡子前，\n換了第三套衣服了。\n\n不管穿哪一件都好看，\n因為穿衣服的是你。\n\n松江南京捷運站見。"
     },
     {
+      slotId: "slot-3",
       time: "13:00", location: "松江南京 · 就饗鐵板燒", title: "午餐",
       photo: null, photoEmoji: "🍳",
       message: "到啦。\n這家是你挑的，所以一定好吃。\n你挑的地方從來沒失手過，\n包括我。\n\n今天想吃什麼就點什麼，\n別跟我客氣，\n你刷什麼我都刷。"
     },
     {
+      slotId: "slot-4",
       time: "14:45", location: "三重 · 越式按摩", title: "一起軟綿綿",
       photo: null, photoEmoji: "🌸",
       message: "現在我們應該都閉著眼睛。\n什麼都不要想、什麼都不要回，\n就專心讓人把你揉得軟軟的。\n\n你挑的這家一定很舒服，\n等等一起軟綿綿地去吃島語。"
     },
     {
+      slotId: "slot-5",
       time: "16:30", location: "按完出來", title: "準備去島語",
       photo: null, photoEmoji: "🍃",
       message: "出來了嗎？\n頭髮看起來怎麼樣？\n我賭你已經照了鏡子三次。\n\n下一站島語，你期待很久了。\n這段路我們慢慢走就好。"
     },
     {
+      slotId: "slot-6",
       time: "17:45", location: "島語餐廳", title: "晚餐",
       photo: null, photoEmoji: "🕯️",
       message: "島語！\n你等超久的島語！\n一定要把所有區通通掃一輪，\n不能客氣。\n\n跟你一起吃飯是全世界最幸福的事，\n你知道吧？\n（不用謙虛，就是這樣。）\n\n今天這餐我負責刷，\n你負責開開心心。"
     },
     {
+      slotId: "slot-7",
       time: "21:00", location: "到家 · 門口", title: "打開門看看",
       photo: null, photoEmoji: "💐",
       message: "到家了嗎？\n門口那個不是我，是一束花。\n\n蛋糕我沒有先訂，\n因為我想了很久，\n覺得你挑的蛋糕一定比我挑的好吃。\n\n查一下 LINE，\n有一張券在那邊等你，\n你挑日子、你挑店，\n我陪你去。"
     },
     {
+      slotId: "slot-8",
       time: "22:30", location: "睡前 · 你的床", title: "最後一件事",
       photo: null, photoEmoji: "📖",
       message: "最後一頁。\n\n下面有一個關卡。\n過了那一關，會打開一本小書，\n是關於你這個人。\n\n我寫了很久\n（其實是今晚趕的，但請裝作不知道）。\n\n不用現在看完，\n但希望你看完會覺得，\n至少有一個人把你放在心上，\n認真地記得你。\n\n我就是那個人。\n\n晚安。\n生日快樂。"
@@ -496,24 +511,28 @@ const CONFIG = {
     title: "關於你這個人",
     chapters: [
       {
+        slotId: "chapter-1",
         num:    "Chapter One",
         title:  "勇敢的你",
         photos: [],
         body:   "今天是你的生日。\n你正在蛻變。\n\n你剛離開了上一份工作，\n面試了五間公司，\n旅行社確定了、\n科技業有很高的機率、\n還有一間生技——禮拜三才要去面試，\n是前主管推薦的，\n因為他覺得你可以。\n\n你有時候說不確定，\n說不知道下一步怎麼走。\n\n但我在旁邊看的人，\n只看到一個對自己的選擇負責任的人。\n\n離職從來不是逃跑。\n面試五間，是因為你知道自己值得選擇，\n不是什麼都接。\n\n今年這一關你一定會過的，\n我沒有一點懷疑。"
       },
       {
+        slotId: "chapter-2",
         num:    "Chapter Two",
         title:  "我們三年的故事",
         photos: ["./photos/birthday1.jpg", "./photos/birthday2.jpg"],
         body:   "我們認識之後第一次一起出去，是宜蘭。\n你幫我按腳。\n\n不知道為什麼這個細節記得特別清楚，\n但就是記得。\n\n今年是第三年，\n我們一起慶祝了三次生日：\n\n第一次，我做了一支影片給你。\n（你大概沒想到我會做這件事。）\n\n第二次，我們去宜蘭兩天一夜，\n住了悅川酒店，\n吃了一頓我覺得很值得的飯。\n你那天很開心，我記得。\n\n第三次，就是今天。\n\n你知道我想給你什麼嗎？\n就是這個——\n一個記得你每一年的人。\n不用宅配、不用拆包裝，\n但我覺得比什麼都重要。"
       },
       {
+        slotId: "chapter-3",
         num:    "Chapter Three",
         title:  "今年，你陪著我",
         photos: [],
         body:   "今年我開始真的在做自己的事業了。\n有很多不確定，有很多要摸索，\n但今年算是真的起步了。\n\n這一年你陪我參加了很多活動，\n線上的、線下的，\n你跟我一起去找客戶、\n幫我規劃課程、幫我想方向，\n有時候你比我還認真。\n\n有一個畫面我一直記得：\n你在旁邊幫我整理一些東西，\n我沒有說話，就這樣看著你，\n心裡想——\n\n這個人真的很好。\n\n我不確定自己這一年做到了什麼，\n但我確定，\n你陪著我這件事，\n是今年最重要的一件事。"
       },
       {
+        slotId: "chapter-4",
         num:    "Chapter Four",
         title:  "接下來的我們",
         photos: [],
@@ -565,12 +584,39 @@ if (CONFIG.bgmFile) {
   });
 }
 
+// ── Cloudinary helper ──
+const CLD = CONFIG.cloudinary || null;
+const CLD_BUST = Date.now();
+function cldUrl(slotId){
+  if (!CLD || !slotId) return null;
+  return `https://res.cloudinary.com/${CLD.cloudName}/image/upload/${CLD.transform}/${CLD.folder}/${slotId}.jpg?t=${CLD_BUST}`;
+}
+
 // ── 建立 Timeline 卡片 ──
 const timelineEl = document.getElementById('timeline');
 CONFIG.timeline.forEach((item, idx) => {
   const card = document.createElement('article');
   card.className = 'card locked';
   card.id        = `card-${idx}`;
+
+  const cldSrc    = cldUrl(item.slotId);
+  const fallback  = item.photo || '';
+  const emoji     = item.photoEmoji || '✦';
+  // 優先抓 Cloudinary；失敗後回 hardcoded photo；再失敗顯示 emoji
+  const photoHtml = cldSrc || fallback
+    ? `<div class="photo"><img
+         src="${cldSrc || fallback}"
+         data-fallback="${cldSrc && fallback ? fallback : ''}"
+         data-emoji="${emoji}"
+         alt="${item.title}"
+         onerror="(function(img){
+           const fb=img.dataset.fallback;
+           if(fb && img.src.indexOf(fb)===-1){ img.src=fb; return; }
+           img.style.display='none';
+           img.parentElement.innerHTML='<span class=&quot;photo-emoji&quot;>'+img.dataset.emoji+'</span>';
+         })(this)"></div>`
+    : `<div class="photo"><span class="photo-emoji">${emoji}</span></div>`;
+
   card.innerHTML = `
     <div class="bullet"></div>
     <div class="time-label">${item.time}</div>
@@ -581,10 +627,7 @@ CONFIG.timeline.forEach((item, idx) => {
         還沒到時間
         <div class="unlock-at">${item.time} 解鎖</div>
       </div>
-      ${item.photo
-        ? `<div class="photo"><img src="${item.photo}" alt="${item.title}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'photo-emoji\\'>${item.photoEmoji||'✦'}</span>'"></div>`
-        : `<div class="photo"><span class="photo-emoji">${item.photoEmoji||'✦'}</span></div>`
-      }
+      ${photoHtml}
       <h3 class="title">${item.title}</h3>
       <p class="message">${item.message}</p>
       <div class="signature">— N</div>
@@ -597,9 +640,16 @@ const bookPagesEl = document.getElementById('bookPages');
 CONFIG.story.chapters.forEach((ch, idx) => {
   const page = document.createElement('div');
   page.className = 'page' + (idx === 0 ? ' active' : '');
-  const photosHtml = (ch.photos && ch.photos.length)
-    ? `<div class="chapter-photos">${ch.photos.map(src =>
-        `<img src="${src}" alt="" onerror="this.style.display='none'">`
+
+  // 合併：Cloudinary 優先，接著 hardcoded photos
+  const allPhotos = [];
+  const cldSrc = cldUrl(ch.slotId);
+  if (cldSrc) allPhotos.push({src: cldSrc, cloud: true});
+  (ch.photos || []).forEach(src => allPhotos.push({src, cloud: false}));
+
+  const photosHtml = allPhotos.length
+    ? `<div class="chapter-photos">${allPhotos.map(p =>
+        `<img src="${p.src}" alt="" onerror="this.style.display='none'">`
       ).join('')}</div>`
     : '';
   page.innerHTML = `
