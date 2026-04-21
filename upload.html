@@ -37,11 +37,11 @@
   .slot-btn.has-photo::after{content:"●";position:absolute;margin-left:4px;color:var(--ok);font-size:.7rem}
   .slot-group{margin-top:16px}
   .slot-group-title{font-size:.78rem;color:var(--ink-soft);letter-spacing:2px;margin-bottom:8px;text-transform:uppercase}
-  .file-zone{position:relative;border:2px dashed var(--line);border-radius:12px;padding:30px 14px;text-align:center;background:#fafaf7;cursor:pointer;transition:.15s}
-  .file-zone:active{background:#f0ebe0}
-  .file-zone input{position:absolute;inset:0;opacity:0;cursor:pointer}
-  .file-zone .icon{font-size:2rem;color:var(--gold);margin-bottom:6px}
-  .file-zone .hint{color:var(--ink-soft);font-size:.9rem}
+  .file-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .file-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:22px 10px;border:2px dashed var(--line);border-radius:12px;background:#fafaf7;cursor:pointer;transition:.15s;position:relative;overflow:hidden;font-size:.95rem;color:var(--ink)}
+  .file-btn:active{background:#f0ebe0;transform:scale(.98)}
+  .file-btn .icon{font-size:1.8rem}
+  .file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0}
   .preview{margin-top:14px;border-radius:12px;overflow:hidden;display:none;position:relative;background:#000}
   .preview img{width:100%;display:block;max-height:60vh;object-fit:contain}
   .preview.show{display:block}
@@ -101,10 +101,17 @@
 
   <div class="card">
     <label>選擇照片</label>
-    <div class="file-zone" id="fileZone">
-      <div class="icon">＋</div>
-      <div class="hint">點這裡 · 拍照 或 從相簿選</div>
-      <input id="fileInput" type="file" accept="image/*" capture="environment">
+    <div class="file-row">
+      <label class="file-btn" for="cameraInput">
+        <span class="icon">📷</span>
+        <span>拍照</span>
+        <input id="cameraInput" type="file" accept="image/*" capture="environment">
+      </label>
+      <label class="file-btn" for="albumInput">
+        <span class="icon">🖼️</span>
+        <span>從相簿選</span>
+        <input id="albumInput" type="file" accept="image/*">
+      </label>
     </div>
     <div class="preview" id="preview">
       <button class="clear" id="clearBtn" type="button">×</button>
@@ -203,11 +210,12 @@ function selectSlot(id){
    檔案選擇 + 預覽
    ═══════════════════════════════════════════════════════════ */
 let selectedFile = null;
-const fileInput  = document.getElementById('fileInput');
-const preview    = document.getElementById('preview');
-const previewImg = document.getElementById('previewImg');
+const cameraInput = document.getElementById('cameraInput');
+const albumInput  = document.getElementById('albumInput');
+const preview     = document.getElementById('preview');
+const previewImg  = document.getElementById('previewImg');
 
-fileInput.addEventListener('change', e=>{
+function handleFileChange(e){
   const f = e.target.files[0];
   if (!f) return;
   selectedFile = f;
@@ -215,11 +223,14 @@ fileInput.addEventListener('change', e=>{
   reader.onload = ev => { previewImg.src = ev.target.result; preview.classList.add('show'); };
   reader.readAsDataURL(f);
   updateUploadBtn();
-});
+}
+cameraInput.addEventListener('change', handleFileChange);
+albumInput.addEventListener('change', handleFileChange);
 
 document.getElementById('clearBtn').addEventListener('click', ()=>{
   selectedFile = null;
-  fileInput.value = '';
+  cameraInput.value = '';
+  albumInput.value = '';
   preview.classList.remove('show');
   updateUploadBtn();
 });
@@ -265,7 +276,8 @@ function doUpload(){
       const res = JSON.parse(xhr.responseText);
       showMsg('ok', '✓ 上傳成功！去網站看看吧');
       selectedFile = null;
-      fileInput.value = '';
+      cameraInput.value = '';
+      albumInput.value = '';
       preview.classList.remove('show');
       updateUploadBtn();
       refreshThumbs();
